@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Sheets API JavaScript Example</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+      function handleClientLoad() {
+        gapi.load('client', initClient);
+      }
+
+      function initClient() {
+        gapi.client.init({
+          apiKey: 'AIzaSyAeH-9WG8zcLi19Ct5wYDynWQx_4K1ipAY',
+          discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+        }).then(() => {
+          getDataFromSheet();
+        });
+      }
+
+      function getDataFromSheet() {
+        const spreadsheetId = '1uqJ-dchFRfUlPqfCb1zQj8SqsmbbtgN3S7PpiLs70X0';
+        const sheetName = 'Sheet 1';
+        const range = `${sheetName}!A1:Z`;
+
+        gapi.client.sheets.spreadsheets.values
+          .get({
+            spreadsheetId,
+            range,
+          })
+          .then((response) => {
+            const data = response.result.values;
+            displayData(data);
+          });
+      }
+
+      function displayData(data) {
+        const output = document.getElementById('output');
+        data.forEach((row) => {
+          const rowDiv = document.createElement('div');
+          rowDiv.textContent = row.join(', ');
+          output.appendChild(rowDiv);
+        });
+      }
+    </script>
+  </head>
+  <body onload="handleClientLoad()">
+    <h1>Google Sheets API JavaScript Example</h1>
+    <div id="output"></div>
+  </body>
+</html>
