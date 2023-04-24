@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google Sheets API JavaScript Example</title>
-    <script src="https://apis.google.com/js/api.js"></script>
+    <title>Google Sheet Embed and API Access</title>
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     <script>
       function handleClientLoad() {
         gapi.load('client', initClient);
@@ -19,7 +19,7 @@
 
       function getDataFromSheet() {
         const spreadsheetId = '1uqJ-dchFRfUlPqfCb1zQj8SqsmbbtgN3S7PpiLs70X0';
-        const sheetName = 'Sheet 1';
+        const sheetName = 'Form Responses 1';
         const range = `${sheetName}!A1:Z`;
 
         gapi.client.sheets.spreadsheets.values
@@ -34,7 +34,7 @@
       }
 
       function displayData(data) {
-        const output = document.getElementById('output');
+        const output = document.getElementById('api-output');
         data.forEach((row) => {
           const rowDiv = document.createElement('div');
           rowDiv.textContent = row.join(', ');
@@ -44,7 +44,9 @@
     </script>
   </head>
   <body onload="handleClientLoad()">
-    <h1>Google Sheets API JavaScript Example</h1>
-    <div id="output"></div>
+    <h1 style="font-family: 'Poppins';">Embedded Google Sheet</h1>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSekaKOTOYCatZS0LEFZytszUtG12VmhXZKXmQquMoQnGV3dq88xE8boiVOdd66iteqh_m3HCvv23O/pubhtml?widget=true&amp;headers=false" width="100%" height="500px"></iframe>
+    <h1 style="font-family: 'Poppins';">Google Sheets API Data</h1>
+    <div id="api-output" style="font-family: 'Poppins';"></div>
   </body>
 </html>
